@@ -1,0 +1,3 @@
+[submodule "src/main/Twitter-Clone-Frontend"]
+	path = src/main/Twitter-Clone-Frontend
+	url = https://github.com/AhmedNur/Twitter-Clone-Frontend.git
