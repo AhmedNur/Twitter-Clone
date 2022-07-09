@@ -4,7 +4,7 @@ A simple webapp that copies twitter's look and basic functionality. This spring 
 
 ## Demo
 
-[Demo](https://i.imgur.com/rzop3bk.mp4)
+[Try it out!](twitter.ahmednur.me)
 
 ## Features
 * Session based authentication
