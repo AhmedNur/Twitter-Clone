@@ -1,10 +1,9 @@
-package me.ahmednur.twitterclone.repositories;
+package twitterclone.repositories;
 
-import me.ahmednur.twitterclone.models.User;
 import org.springframework.data.repository.CrudRepository;
+import twitterclone.models.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
     User findByUsername(String username);
-
     User findByTag(String tag);
 }

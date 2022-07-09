@@ -1,6 +1,5 @@
-package me.ahmednur.twitterclone.security;
+package twitterclone.security;
 
-import me.ahmednur.twitterclone.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import twitterclone.services.UserDetailsServiceImpl;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 @Configuration
@@ -21,14 +26,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(userDetailsService);
     }
 
     @Override
-    protected void configure(final HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception{
         http
+                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
                 .csrf().disable()
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/api/me").permitAll()
@@ -51,12 +61,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationFailureHandler authFailureHandler() {
+    public AuthenticationFailureHandler authFailureHandler(){
         return new SimpleUrlAuthenticationFailureHandler();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 }

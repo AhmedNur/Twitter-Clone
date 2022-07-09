@@ -1,17 +1,17 @@
-package me.ahmednur.twitterclone.controllers;
+package twitterclone.controllers;
 
-import me.ahmednur.twitterclone.services.TweetService;
-import me.ahmednur.twitterclone.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import me.ahmednur.twitterclone.models.User;
+import twitterclone.models.User;
+import twitterclone.services.TweetService;
+import twitterclone.services.UserService;
 
-import javax.naming.AuthenticationException;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class ProfileController {
@@ -34,17 +34,26 @@ public class ProfileController {
         return new ResponseEntity<>(tweetService.getTweetsByAuthor(tag, page, 15), HttpStatus.OK);
     }
 
-    @PostMapping("/me/update")
-    public ResponseEntity updateProfile(@RequestParam String tag, @RequestParam String displayName, @RequestParam String bio) {
+    @PostMapping("/settings/tag")
+    public ResponseEntity setTag(@RequestParam String tag) {
         try {
-            userService.updateProfile(tag, displayName, bio);
+            userService.setUserTag(tag);
             return new ResponseEntity(HttpStatus.OK);
-        } catch (EntityExistsException ex) {
+        } catch (EntityExistsException e) {
             return new ResponseEntity<>("tag", HttpStatus.CONFLICT);
-        } catch (AuthenticationException e) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
+    }
 
+    @PostMapping("/settings/displayname")
+    public ResponseEntity setDisplayName(@RequestParam String displayName) {
+        userService.setUserDisplayName(displayName);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/settings/bio")
+    public ResponseEntity setBio(@RequestParam String bio) {
+        userService.setUserBio(bio);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/profile/{tag:[a-zA-Z0-9-_]+}/follow")

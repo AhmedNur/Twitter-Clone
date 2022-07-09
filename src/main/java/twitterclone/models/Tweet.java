@@ -1,4 +1,4 @@
-package me.ahmednur.twitterclone.models;
+package twitterclone.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

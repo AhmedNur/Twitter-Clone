@@ -1,4 +1,4 @@
-package me.ahmednur.twitterclone.util;
+package twitterclone.util;
 
 import javax.naming.AuthenticationException;
 

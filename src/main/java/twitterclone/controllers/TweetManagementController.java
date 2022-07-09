@@ -1,16 +1,17 @@
-package me.ahmednur.twitterclone.controllers;
+package twitterclone.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
-import me.ahmednur.twitterclone.models.Tweet;
-import me.ahmednur.twitterclone.services.TweetService;
+import twitterclone.models.Tweet;
+import twitterclone.services.TweetService;
 
 import javax.persistence.EntityNotFoundException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 public class TweetManagementController {
     @Autowired
@@ -18,15 +19,13 @@ public class TweetManagementController {
 
     @PostMapping("/compose")
     public ResponseEntity composeTweet(@RequestParam String content) {
-        tweetService.createTweet(content);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(tweetService.createTweet(content), HttpStatus.OK);
     }
 
     @PostMapping("/tweet/{parentTweetId:[0-9]+}/reply")
     public ResponseEntity replyToTweet(@PathVariable Long parentTweetId, @RequestParam String content) {
         try {
-            tweetService.replyToTweet(parentTweetId, content);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(tweetService.replyToTweet(parentTweetId, content), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }

@@ -1,16 +1,17 @@
-package me.ahmednur.twitterclone.controllers;
+package twitterclone.controllers;
 
-import me.ahmednur.twitterclone.services.RegistrationService;
-import me.ahmednur.twitterclone.util.UsernameExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import me.ahmednur.twitterclone.models.User;
-import me.ahmednur.twitterclone.services.UserService;
+import twitterclone.models.User;
+import twitterclone.services.RegistrationService;
+import twitterclone.services.UserService;
+import twitterclone.util.UsernameExistsException;
 
 import javax.persistence.EntityExistsException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class RegistrationController {

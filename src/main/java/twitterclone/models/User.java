@@ -1,9 +1,10 @@
-package me.ahmednur.twitterclone.models;
+package twitterclone.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,23 +52,9 @@ public class User implements UserDetails {
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        for (String role : roles) {
+        for(String role : roles) {
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
-    }
-
-    public User() {
-
-    }
-
-    public User(String username, String password, Long id) {
-        this.username = username;
-        this.password = password;
-        this.id = id;
-        this.enabled = true;
-        this.credentialsNonExpired = true;
-        this.accountNonExpired = true;
-        this.accountNonLocked = true;
     }
 }
