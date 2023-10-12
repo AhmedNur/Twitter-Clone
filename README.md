@@ -17,7 +17,7 @@ A simple webapp that copies twitter's look and basic functionality. This spring 
 * Changing user display name, tag and bio
 
 ## To Do
-* Switch from session based authentication to JWT
+* Switch to OAuth
 * Profile Pictures & Headers
 * Attached Images
 * Trending posts
